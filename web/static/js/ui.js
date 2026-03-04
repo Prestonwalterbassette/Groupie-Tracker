@@ -529,6 +529,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		mainView.appendChild(createEl('h3', '', 'Membres'));
 		mainView.appendChild(buildMembersList(membersArr));
 		mainView.appendChild(createEl('p', '', 'Premier album: ' + (artist.firstAlbum || '—')));
+		if (window.GTFavorites && typeof artist.id !== 'undefined') {
+			var favoriteWrap = createEl('div', 'artist-favorite-wrap');
+			var favoriteBtn = createEl('button', 'favorite-btn');
+			favoriteBtn.type = 'button';
+			function syncModalFavoriteState() {
+				var isFav = window.GTFavorites.isFavorite(artist.id);
+				favoriteBtn.textContent = isFav ? 'Retirer des favoris' : 'Ajouter aux favoris';
+				favoriteBtn.classList.toggle('is-favorite', isFav);
+			}
+			syncModalFavoriteState();
+			favoriteBtn.addEventListener('click', function () {
+				window.GTFavorites.toggle(artist);
+				syncModalFavoriteState();
+			});
+			favoriteWrap.appendChild(favoriteBtn);
+			mainView.appendChild(favoriteWrap);
+		}
 		var actions = createEl('div', 'artist-links');
 		var detail = createEl('div', 'artist-detail is-hidden');
 		var detailHeader = createEl('div', 'artist-detail__head');

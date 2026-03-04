@@ -878,6 +878,15 @@ body, p, li, a{color:var(--muted-strong)}
     border-color: rgba(22, 163, 74, 0.9);
 }
 
+#artistModal {
+    background: rgba(0, 0, 0, 0.68) !important;
+    backdrop-filter: blur(2px);
+}
+
+#artistModal.artist-modal.open {
+    background: rgba(0, 0, 0, 0.68) !important;
+}
+
 .btn-subscribe:hover::before {
     transform: translateX(100%);
 }
