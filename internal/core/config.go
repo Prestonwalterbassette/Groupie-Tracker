@@ -7,8 +7,6 @@ import (
 
 	"github.com/joho/godotenv"
 )
-
-// Config contient toutes les variables d'environnement de l'application
 type Config struct {
 	Port              string
 	Environment       string
@@ -23,10 +21,7 @@ type Config struct {
 	AllowedOrigins    string
 	LogLevel          string
 }
-
-// LoadConfig charge les variables d'environnement
 func LoadConfig() *Config {
-	// Charger le fichier .env s'il existe (pour développement local)
 	_ = godotenv.Load()
 
 	return &Config{
@@ -44,8 +39,6 @@ func LoadConfig() *Config {
 		LogLevel:          getEnv("LOG_LEVEL", "info"),
 	}
 }
-
-// getEnv récupère une variable d'environnement avec une valeur par défaut
 func getEnv(key, defaultValue string) string {
 	value := os.Getenv(key)
 	if value == "" {
@@ -56,8 +49,6 @@ func getEnv(key, defaultValue string) string {
 	}
 	return value
 }
-
-// GetDBConnectionString retourne la chaîne de connexion MySQL
 func (c *Config) GetDBConnectionString() string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True",
 		c.DBUser,

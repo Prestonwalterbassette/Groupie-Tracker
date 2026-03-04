@@ -1,28 +1,28 @@
-/* Titre principal: taille et couleur en hero */
+
 h1 {
     font-size: 2.5em;
     color: #f8fafc;
     margin-bottom: 0.5em;
 }
 
-/* Variables CSS (thème glassmorphism) */
+
 :root{
-    --charcoal: #0d0f14; /* fond sombre */
-    --panel: rgba(20,22,30,0.55); /* panneau translucide */
-    --panel-strong: rgba(20,22,30,0.75); /* panneau plus opaque */
-    --muted: #c4c9d4; /* texte secondaire */
-    --muted-strong: #e9ecf5; /* texte primaire */
-    --gold: #ec4899; /* accent rose */
-    --electric: #06b6d4; /* accent cyan */
-    --accent: linear-gradient(120deg, #06b6d4, #a78bfa); /* dégradé principal */
-    --accent-solid: #a78bfa; /* violet fixe */
-    --glass-border: rgba(255,255,255,0.08); /* bordure verre */
-    --radius: 14px; /* arrondi global */
-    --max-width: 1800px; /* largeur max container */
-    --shadow-strong: 0 20px 70px rgba(0,0,0,0.4); /* ombre profonde */
+    --charcoal: #0d0f14; 
+    --panel: rgba(20,22,30,0.55); 
+    --panel-strong: rgba(20,22,30,0.75); 
+    --muted: #c4c9d4; 
+    --muted-strong: #e9ecf5; 
+    --gold: #ec4899; 
+    --electric: #06b6d4; 
+    --accent: linear-gradient(120deg, #06b6d4, #a78bfa); 
+    --accent-solid: #a78bfa; 
+    --glass-border: rgba(255,255,255,0.08); 
+    --radius: 14px; 
+    --max-width: 1800px; 
+    --shadow-strong: 0 20px 70px rgba(0,0,0,0.4); 
 }
 
-/* Reset & base */
+
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -32,7 +32,7 @@ body{
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    /* Fond: dégradé + image (fallback vers vinyle.png existant) */
+    
     background-image: linear-gradient(135deg, rgba(12,12,18,0.92) 0%, rgba(15,17,28,0.8) 45%, rgba(10,8,18,0.9) 100%), url('/static/images/vinyle.png');
     background-size: cover;
     background-position: center center;
@@ -41,7 +41,7 @@ body{
     min-height:100vh;
 }
 
-/* Conteneur page: panneau glass */
+
 .container{
     max-width:var(--max-width);
     margin:1.25rem auto;
@@ -53,7 +53,7 @@ body{
     backdrop-filter: blur(14px);
 }
 
-/* En-tête principal */
+
 .site-header{
     padding: 0.85rem 1.5rem;
     background: var(--panel-strong);
@@ -107,7 +107,7 @@ body{
     box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
-/* Header search form */
+
 .header-search-form{
     display: flex;
     gap: 0.5rem;
@@ -130,18 +130,18 @@ body{
 .header-search-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg, rgba(255,255,255,0.08), rgba(255,255,255,0));transform:translateX(-100%);transition:transform 0.4s ease}
 .header-search-btn:hover::after{transform:translateX(0)}
 
-/* Hero */
+
 .hero h2{font-family:'Merriweather',serif;font-size:1.75rem;margin-top:0;color:#f8fafc}
 .hero p{color:var(--muted)}
 .cta .btn{display:inline-block;background:var(--accent);color:#fff;padding:0.7rem 1.15rem;border-radius:12px;text-decoration:none;border:1px solid var(--glass-border);box-shadow:0 14px 40px rgba(0,0,0,0.35);transition:transform 0.2s ease, box-shadow 0.2s ease}
 .cta .btn:hover{transform:translateY(-1px) scale(1.01);box-shadow:0 18px 46px rgba(0,0,0,0.45)}
 
-/* Features / cards */
+
 .features{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
 .features article{background:var(--panel);padding:1rem;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,0.35);border:1px solid var(--glass-border);backdrop-filter: blur(12px)}
 .features h3{margin-bottom:0.35rem;color:#f8fafc}
 
-/* Footer */
+
 .site-footer {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -194,10 +194,10 @@ body{
     }
 }
 
-/* Utility */
+
 .muted{color:var(--muted)}
 
-/* Page title section */
+
 .page-title {
     text-align: center;
     margin-bottom: 2rem;
@@ -220,15 +220,15 @@ body{
     margin: 0;
 }
 
-/* Responsive */
+
 @media(min-width:700px){.features{grid-template-columns:repeat(3,1fr)}.hero h2{font-size:2rem}}
 @media(max-width:599px){.site-header .container{flex-wrap:wrap}.main-nav{width:100%;justify-content:flex-start;gap:0.5rem}.container{margin:0.5rem;padding:1rem}}
 @media(max-width:600px){.header-search-form{width:100%;gap:0.5rem}.header-search-input{flex:1}.page-title h2{font-size:1.8rem}}
 
-/* Small improvements: buttons & focus */
+
 .btn:focus, .main-nav a:focus{outline:2px solid rgba(216,52,52,0.25);outline-offset:2px}
 
-/* Accessibility: ensure readable contrast for text over the overlay */
+
 body, p, li, a{color:var(--muted-strong)}
 
 .hidden{display:none !important}
@@ -293,11 +293,11 @@ body, p, li, a{color:var(--muted-strong)}
     margin-top: 8px;
 }
 
-/* Vinyl row fixed to bottom: repeated vinyl images */
+
 .vinyl-area{padding-top:0;padding-bottom:0}
 .vinyl-grid{min-height:600px}
 
-/* Vinyl rows placed inside a `.container` so they sit on same layer */
+
 .vinyl-rows{
     width:100%;
     display:flex;
@@ -307,7 +307,7 @@ body, p, li, a{color:var(--muted-strong)}
     justify-content:center;
 }
 
-/* grid used when we dynamically generate all artists */
+
 .vinyl-grid{
     width:100%;
     display:grid;
@@ -356,7 +356,7 @@ body, p, li, a{color:var(--muted-strong)}
     filter:brightness(1.1);
 }
 
-/* Animation when music is playing */
+
 .vinyl-frame.playing {
     animation: vinylSpin 2s linear infinite, vinylPulse 1.5s ease-in-out infinite;
 }
@@ -425,7 +425,7 @@ body, p, li, a{color:var(--muted-strong)}
     color:var(--gold);
 }
 
-/* Responsive: adjust columns and sizes */
+
 @media(max-width:1400px){
     .vinyl-grid{grid-template-columns: repeat(3, 1fr);gap:35px 25px}
     .vinyl-frame{width:350px;height:350px}
@@ -450,8 +450,9 @@ body, p, li, a{color:var(--muted-strong)}
     .vinyl-frame{width:240px;height:240px}
     .vinyl-cover{width:42%;height:42%}
     .vinyl-caption{font-size:1rem}
+}
 
-/* Modal for artist details */
+
 .artist-modal {
     position: fixed;
     inset: 0;
@@ -523,7 +524,7 @@ body, p, li, a{color:var(--muted-strong)}
 .artist-relations__loc{font-weight:600;color:#f8fafc;margin-bottom:4px}
 .artist-relations__dates{margin:0 0 6px 14px;padding:0;list-style:disc;color:var(--muted)}
 .artist-relations__dates li{margin-bottom:3px}
-/* Modal links under 'Premier album' */
+
 .artist-links{margin-top:12px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .artist-links a,
 .artist-links button{display:inline-block;color:#fff;text-decoration:none;padding:0.65rem 1.2rem;font-size:1rem;font-weight:600;border-radius:10px;background:var(--accent);border:1px solid var(--glass-border);box-shadow:0 12px 28px rgba(0,0,0,0.35);transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;cursor:pointer}
@@ -536,7 +537,7 @@ body, p, li, a{color:var(--muted-strong)}
 .artist-section{padding:10px 12px;border-radius:10px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.04);box-shadow:0 6px 16px rgba(0,0,0,0.25)}
 .artist-section.is-hidden{display:none}
 
-/* Detail view toggling inside the modal */
+
 .artist-main.is-hidden{display:none}
 .artist-detail{margin-top:12px;padding:12px;border:1px solid var(--glass-border);border-radius:10px;background:rgba(255,255,255,0.04);box-shadow:0 10px 28px rgba(0,0,0,0.28)}
 .artist-detail.is-hidden{display:none}
@@ -547,13 +548,13 @@ body, p, li, a{color:var(--muted-strong)}
 .artist-link-btn--ghost:focus{outline:2px solid rgba(123,58,237,0.35);outline-offset:2px}
 .artist-detail__content section{margin:0}
 
-/* Generic hide utility for modal view switches */
+
 .is-hidden{display:none !important}
 
-/* keep modal content readable on small screens */
+
 @media(max-width:480px){.artist-modal__hero{flex-direction:column;align-items:flex-start}.artist-cover{width:100%;height:auto}}
 
-/* Animations */
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse {
     0%, 100% { opacity: 1; }
@@ -568,7 +569,7 @@ body, p, li, a{color:var(--muted-strong)}
     100% { opacity: 1; transform: scale(1); }
 }
 
-/* Enhanced button styles with ripple effect */
+
 .btn {
     position: relative;
     overflow: hidden;
@@ -590,7 +591,7 @@ body, p, li, a{color:var(--muted-strong)}
     height: 300px;
 }
 
-/* Enhanced card hover animations */
+
 .features article {
     position: relative;
 }
@@ -599,14 +600,14 @@ body, p, li, a{color:var(--muted-strong)}
     border-color: rgba(123, 58, 237, 0.5);
 }
 
-/* Center the last vinyl item in the middle column when it's alone on the last row */
+
 .vinyl-grid .vinyl-item:last-child{
-    grid-column: 2; /* place in middle column */
+    grid-column: 2; 
     justify-self: center;
 }
 
 
-    /* Animations */
+    
     @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .vinyl-item{
     display:flex;
@@ -634,7 +635,7 @@ body, p, li, a{color:var(--muted-strong)}
     pointer-events:auto;
 }
 
-/* ensure the cover image is clipped to the circular frame and slightly zoomed */
+
 .vinyl-frame{overflow:hidden;position:relative}
 
 .vinyl-cover{
@@ -645,7 +646,7 @@ body, p, li, a{color:var(--muted-strong)}
 }
 
 .vinyl-cover{
-    width:40%; /* smaller cover to reveal more vinyl texture */
+    width:40%; 
     height:40%;
     border-radius:50%;
     object-fit:cover;
@@ -654,46 +655,46 @@ body, p, li, a{color:var(--muted-strong)}
     border:0.5px solid rgba(255,255,255,0.36);
 }
 
-/* Remove extra bottom padding previously added to body */
+
 .with-vinyl{padding-bottom:0}
 
-/* Footer should remain visible above vinyl area */
+
 .site-footer{position:relative;z-index:2}
 
-/* Responsive: scale down vinyls on small screens */
+
 @media(max-width:1400px){
     .vinyl-frame{width:450px;height:450px}
     .vinyl-cover{width:42%;height:42%}
 }
 
 @media(max-width:1024px){
-    /* tablets */
+    
     .vinyl-frame{width:400px;height:400px}
     .vinyl-cover{width:46%;height:46%}
 }
 
 @media(max-width:900px){
-    /* small laptops / large phones */
+    
     .vinyl-frame{width:320px;height:320px}
     .vinyl-cover{width:50%;height:50%}
-    /* on narrower viewports switch to 2 columns and center last item */
+    
     .vinyl-grid{grid-template-columns: repeat(2, auto)}
     .vinyl-grid .vinyl-item:last-child{grid-column: 1 / -1; justify-self:center}
 }
 
 @media(max-width:500px){
-    /* phones */
+    
     .vinyl-frame{width:180px;height:180px}
     .vinyl-cover{width:68%;height:68%}
 }
 
-/* Keep the hover glow tight around the vinyl (override any earlier definitions) */
+
 .vinyl-frame:hover{
     box-shadow:0 0 14px 6px rgba(123,58,237,0.22);
     filter:none;
 }
 
-/* Modal for artist details */
+
 .artist-modal {
     position: fixed;
     inset: 0;
@@ -780,7 +781,7 @@ body, p, li, a{color:var(--muted-strong)}
     margin-top: 0px;
 }
 
-/* nicer modal layout */
+
 .artist-modal__hero {
     display: flex;
     gap: 14px;
@@ -823,7 +824,7 @@ body, p, li, a{color:var(--muted-strong)}
     color: var(--muted-strong);
     font-weight: 500;
 }
-/* Duplicate block normalized to high-contrast buttons */
+
 .artist-links a,
 .artist-links button{display:inline-block;color:#fff;text-decoration:none;padding:0.45rem 0.7rem;border-radius:10px;background:var(--accent);border:1px solid var(--glass-border);box-shadow:0 12px 28px rgba(0,0,0,0.35);transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease}
 .artist-links a:hover,
@@ -831,7 +832,7 @@ body, p, li, a{color:var(--muted-strong)}
 .artist-links a:focus,
 .artist-links button:focus{outline:2px solid rgba(123,58,237,0.35);outline-offset:2px}
 
-/* Ensure artist modal children are hidden by default */
+
 .artist-modal * {
     visibility: hidden;
 }
@@ -840,9 +841,9 @@ body, p, li, a{color:var(--muted-strong)}
     visibility: visible;
 }
 
-/* ===================== SUBSCRIPTION STYLES ===================== */
 
-/* Subscribe button in header */
+
+
 
 .btn-subscribe {
     background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -885,7 +886,7 @@ body, p, li, a{color:var(--muted-strong)}
     transform: translateY(-1px) scale(1.02);
 }
 
-/* Auth button + actions wrapper */
+
 .header-actions{
     margin-left: auto;
     display: flex;
@@ -934,7 +935,7 @@ body, p, li, a{color:var(--muted-strong)}
     transform: translateY(-1px) scale(1.02);
 }
 
-/* ===================== AUTH PAGE ===================== */
+
 
 .auth-container{
     display:flex;
@@ -1210,7 +1211,7 @@ body, p, li, a{color:var(--muted-strong)}
     .auth-tab{padding:0.7rem 0.8rem;font-size:0.9rem}
 }
 
-/* Modal styling - default hidden */
+
 .modal {
     display: none !important;
     visibility: hidden;
@@ -1231,7 +1232,7 @@ body, p, li, a{color:var(--muted-strong)}
     transition: visibility 0.3s ease, opacity 0.3s ease;
 }
 
-/* Show modal only with .active or .open class */
+
 .modal.active,
 .modal.open {
     display: flex !important;
@@ -1242,7 +1243,7 @@ body, p, li, a{color:var(--muted-strong)}
     pointer-events: auto;
 }
 
-/* Ensure modal content doesn't leak */
+
 .modal * {
     visibility: hidden;
 }
@@ -1327,7 +1328,7 @@ body, p, li, a{color:var(--muted-strong)}
     margin-bottom: 2rem;
 }
 
-/* Subscription Plans */
+
 .subscription-plans {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1399,7 +1400,7 @@ body, p, li, a{color:var(--muted-strong)}
     box-shadow: 0 12px 30px rgba(123, 58, 237, 0.4);
 }
 
-/* Payment Form */
+
 .payment-form {
     background: rgba(20, 22, 30, 0.6);
     border: 1px solid var(--glass-border);
@@ -1504,7 +1505,7 @@ body, p, li, a{color:var(--muted-strong)}
     color: #fff;
 }
 
-/* Success Message */
+
 .success-message {
     text-align: center;
     padding: 2rem;
@@ -1525,7 +1526,7 @@ body, p, li, a{color:var(--muted-strong)}
     color: var(--muted);
 }
 
-/* Responsive */
+
 @media(max-width: 600px) {
     .subscription-plans {
         grid-template-columns: 1fr;

@@ -1,13 +1,3 @@
-// ============================================================================
-// GÉOLOCALISATION: CARTOGRAPHIER LES LIEUX DE CONCERTS AVEC LEAFLET + NOMINATIM
-// ============================================================================
-// Ce script:
-// - Charge artistes et relations (dates↔lieux) via proxy API
-// - Agrège les données par lieu
-// - Géocode chaque lieu avec Nominatim (OpenStreetMap) avec cache localStorage
-// - Place des marqueurs Leaflet et ajuste la vue aux bounds
-// - Construit des popups HTML avec artistes et dates
-// ============================================================================
 
 (function () {
 	const statusEl = document.getElementById('geo-status');
@@ -17,46 +7,29 @@
 	const setStatus = (msg) => {
 		if (statusEl) statusEl.textContent = msg;
 	};
-
-	// Initialiser la carte Leaflet
 	const map = L.map('map');
 	map.setView([20, 0], 2);
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; OpenStreetMap contributors',
 		maxZoom: 18,
 	}).addTo(map);
-
-	// Proxies backend pour éviter CORS et accélérer les réponses
 	const ARTISTS_URL = '/api/artists-proxy';
 	const RELATION_URL = '/api/relation-proxy';
-
-	// Clé de cache pour localStorage (minuscule pour uniformiser)
 	const cacheKey = (loc) => `geocode:${loc.toLowerCase()}`;
-	// Petite pause pour respecter la politesse avec Nominatim
 	const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
-
-	// Helper générique pour charger du JSON avec vérification HTTP
 	async function fetchJson(url) {
 		const res = await fetch(url);
 		if (!res.ok) throw new Error('HTTP ' + res.status);
 		return res.json();
 	}
-
-	// Charger artistes et relations, puis agréger par lieu
 	async function buildData() {
 		setStatus('Chargement des artistes…');
 		const artists = await fetchJson(ARTISTS_URL);
 
 		setStatus('Chargement des relations (lieux + dates)…');
 		const relation = await fetchJson(RELATION_URL);
-
-		// Map location → {loc, artists: [{id,name,image}], dates: [..]}
 		const byLocation = new Map();
-
-		// Accès direct artiste par ID
 		const artistsById = new Map(artists.map((a) => [a.id, a]));
-
-		// Parcourir toutes les relations et regrouper par lieu
 		for (const entry of relation.index || []) {
 			const artist = artistsById.get(entry.id);
 			const name = artist ? artist.name : `Artiste #${entry.id}`;
@@ -75,8 +48,6 @@
 
 		return { artists, relationByLocation: byLocation };
 	}
-
-	// Géocoder un lieu avec Nominatim, avec cache localStorage
 	async function geocodeLocation(loc) {
 		const key = cacheKey(loc);
 		const cached = localStorage.getItem(key);
@@ -85,7 +56,6 @@
 				return JSON.parse(cached);
 			} catch {}
 		}
-		// Use Nominatim to geocode the textual location
 		const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(loc)}`;
 		const res = await fetch(url, {
 			headers: { 'Accept-Language': 'fr' },
@@ -96,12 +66,9 @@
 		const best = arr[0];
 		const point = { lat: parseFloat(best.lat), lon: parseFloat(best.lon) };
 		localStorage.setItem(key, JSON.stringify(point));
-		// be polite with Nominatim; small delay between requests
 		await sleep(250);
 		return point;
 	}
-
-	// Construire le HTML du popup (liste artistes + dates uniques)
 	function popupHtml(bucket) {
 		const uniqueDates = Array.from(new Set(bucket.dates)).sort();
 		const artistsHtml = bucket.artists
@@ -121,8 +88,6 @@
 			</div>
 		`;
 	}
-
-	// Programme principal: géocoder, placer les marqueurs, ajuster la vue
 	async function main() {
 		try {
 			const { relationByLocation } = await buildData();
@@ -131,8 +96,6 @@
 			const bounds = [];
 			let success = 0;
 			let failures = 0;
-
-			// Pour chaque lieu, tenter le géocodage puis placer un marqueur
 			for (const [loc, bucket] of relationByLocation.entries()) {
 				try {
 					const pt = await geocodeLocation(loc);
@@ -148,8 +111,6 @@
 					failures++;
 				}
 			}
-
-			// Ajuster la vue à tous les marqueurs si présents
 			if (bounds.length) {
 				const b = L.latLngBounds(bounds);
 				map.fitBounds(b.pad(0.2));

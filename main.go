@@ -9,19 +9,14 @@ import (
 
 	"groupiepersso/internal/core"
 )
-
-// proxyAPI fait un proxy HTTP simple vers une URL cible
 func proxyAPI(targetURL string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Créer une requête GET vers l'API distante
 		resp, err := http.Get(targetURL)
 		if err != nil {
 			http.Error(w, "API unavailable", http.StatusServiceUnavailable)
 			return
 		}
 		defer resp.Body.Close()
-
-		// Copier les headers de la réponse API
 		for key, values := range resp.Header {
 			for _, value := range values {
 				w.Header().Add(key, value)
@@ -29,29 +24,21 @@ func proxyAPI(targetURL string) http.HandlerFunc {
 		}
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Content-Type", "application/json")
-
-		// Copier le statut et le body
 		w.WriteHeader(resp.StatusCode)
 		io.Copy(w, resp.Body)
 	}
 }
 
 func main() {
-	// Charger la configuration depuis les variables d'environnement
 	cfg := core.LoadConfig()
-
-	// Route pour les fichiers statiques
 	fs := http.FileServer(http.Dir(filepath.Join("web", "static")))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-
-	// Proxy audio pour contourner CORS sur les previews externes
 	http.HandleFunc("/api/audio-proxy", func(w http.ResponseWriter, r *http.Request) {
 		url := r.URL.Query().Get("url")
 		if url == "" {
 			http.Error(w, "missing url", http.StatusBadRequest)
 			return
 		}
-		// Certaines API refusent les requêtes sans User-Agent : forçons-en un.
 		req, err := http.NewRequest(http.MethodGet, url, nil)
 		if err != nil {
 			http.Error(w, "invalid url", http.StatusBadRequest)
@@ -64,8 +51,6 @@ func main() {
 			return
 		}
 		defer resp.Body.Close()
-
-		// Copier content-type si présent
 		if ct := resp.Header.Get("Content-Type"); ct != "" {
 			w.Header().Set("Content-Type", ct)
 		} else {
@@ -75,8 +60,6 @@ func main() {
 		w.WriteHeader(resp.StatusCode)
 		io.Copy(w, resp.Body)
 	})
-
-	// Routes pour les templates
 	http.HandleFunc("/search.html", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, filepath.Join("web", "templates", "search.html"))
 	})
@@ -92,16 +75,11 @@ func main() {
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, filepath.Join("web", "templates", "login.html"))
 	})
-
-	// Routes API avec proxy
 	http.HandleFunc("/api/artists-proxy", proxyAPI(fmt.Sprintf("%s/artists", cfg.GroupieTrackerAPI)))
 	http.HandleFunc("/api/locations-proxy", proxyAPI(fmt.Sprintf("%s/locations", cfg.GroupieTrackerAPI)))
 	http.HandleFunc("/api/dates-proxy", proxyAPI(fmt.Sprintf("%s/dates", cfg.GroupieTrackerAPI)))
-	// Alias avec et sans 's' pour éviter les erreurs de route
 	http.HandleFunc("/api/relation-proxy", proxyAPI(fmt.Sprintf("%s/relation", cfg.GroupieTrackerAPI)))
 	http.HandleFunc("/api/relations-proxy", proxyAPI(fmt.Sprintf("%s/relation", cfg.GroupieTrackerAPI)))
-
-	// Route racine pour index.html
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
 			http.NotFound(w, r)
