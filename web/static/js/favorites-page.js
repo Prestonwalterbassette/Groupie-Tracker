@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			body.className = 'favorite-card__body';
 
 			const title = document.createElement('h3');
-			title.textContent = artist.name || 'Artiste';
+			title.textContent = '⭐ ' + (artist.name || 'Artiste');
 			body.appendChild(title);
 
 			if (artist.creationDate) {

@@ -176,7 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			const body = document.createElement('div');
 			body.className = 'artist-body';
 			const h2 = document.createElement('h2');
-			h2.textContent = artist.name || '—';
+			function setSearchCardFavoriteState(active) {
+				h2.textContent = active ? ('⭐ ' + (artist.name || '—')) : (artist.name || '—');
+			}
+			setSearchCardFavoriteState(false);
 			body.appendChild(h2);
 
 			const cityVal = artist.city || artist.location || artist.place;
@@ -217,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					const isFav = window.GTFavorites.isFavorite(artist.id);
 					favoriteBtn.textContent = isFav ? 'Retirer des favoris' : 'Ajouter aux favoris';
 					favoriteBtn.classList.toggle('is-favorite', isFav);
+					setSearchCardFavoriteState(isFav);
 				}
 				syncFavoriteState();
 				favoriteBtn.addEventListener('click', (e) => {

@@ -260,7 +260,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			item.appendChild(frame);
 			const caption = document.createElement('div');
 			caption.className = 'vinyl-caption';
-			caption.textContent = a.name || '';
+			function setCaptionFavoriteState(active) {
+				caption.textContent = active ? ('⭐ ' + (a.name || '')) : (a.name || '');
+			}
+			setCaptionFavoriteState(false);
 			item.appendChild(caption);
 			if (window.GTFavorites) {
 				const favWrap = document.createElement('div');
@@ -272,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					const active = window.GTFavorites.isFavorite(a.id);
 					favBtn.textContent = active ? 'Retirer des favoris' : 'Ajouter aux favoris';
 					favBtn.classList.toggle('is-favorite', active);
+					setCaptionFavoriteState(active);
 				}
 				syncFavoriteButton();
 				favBtn.addEventListener('click', function (e) {
@@ -411,19 +415,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	function createModal() {
 		modalEl = createEl('div', 'artist-modal');
 		modalEl.id = 'artistModal';
-		modalEl.style.position = 'fixed';
-		modalEl.style.inset = '0';
-		modalEl.style.display = 'none';
-		modalEl.style.alignItems = 'center';
-		modalEl.style.justifyContent = 'center';
-		modalEl.style.zIndex = '99999';
-		modalEl.style.background = 'rgba(0, 0, 0, 0.6)';
+		modalEl.style.setProperty('position', 'fixed', 'important');
+		modalEl.style.setProperty('top', '0', 'important');
+		modalEl.style.setProperty('right', '0', 'important');
+		modalEl.style.setProperty('bottom', '0', 'important');
+		modalEl.style.setProperty('left', '0', 'important');
+		modalEl.style.setProperty('display', 'none', 'important');
+		modalEl.style.setProperty('align-items', 'center', 'important');
+		modalEl.style.setProperty('justify-content', 'center', 'important');
+		modalEl.style.setProperty('z-index', '99999', 'important');
+		modalEl.style.setProperty('padding', '24px', 'important');
+		modalEl.style.setProperty('overflow-y', 'auto', 'important');
+		modalEl.style.setProperty('box-sizing', 'border-box', 'important');
+		modalEl.style.setProperty('background', 'rgba(0, 0, 0, 0.6)', 'important');
 		var panel = createEl('div', 'artist-modal__panel');
 		panel.style.position = 'relative';
 		panel.style.maxWidth = '720px';
 		panel.style.width = '90%';
 		panel.style.maxHeight = '85vh';
 		panel.style.overflowY = 'auto';
+		panel.style.margin = 'auto';
 		panel.setAttribute('role', 'dialog');
 		panel.setAttribute('aria-modal', 'true');
 		var closeBtn = createEl('button', 'artist-modal__close', '×');
@@ -521,7 +532,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			hero.appendChild(cover);
 		}
 		var head = createEl('div', 'artist-modal__head');
-		head.appendChild(createEl('h2', '', artist.name || 'Artiste'));
+		var artistTitle = createEl('h2', '', artist.name || 'Artiste');
+		head.appendChild(artistTitle);
 		head.appendChild(createEl('p', 'muted', 'Année de création: ' + (artist.creationDate || '—')));
 		hero.appendChild(head);
 		var body = createEl('div', 'artist-modal__body');
@@ -537,6 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				var isFav = window.GTFavorites.isFavorite(artist.id);
 				favoriteBtn.textContent = isFav ? 'Retirer des favoris' : 'Ajouter aux favoris';
 				favoriteBtn.classList.toggle('is-favorite', isFav);
+				artistTitle.textContent = isFav ? ('⭐ ' + (artist.name || 'Artiste')) : (artist.name || 'Artiste');
 			}
 			syncModalFavoriteState();
 			favoriteBtn.addEventListener('click', function () {
@@ -596,14 +609,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		body.appendChild(detail);
 		panel.appendChild(hero);
 		panel.appendChild(body);
-		modalEl.style.display = 'flex';
+		modalEl.style.setProperty('display', 'flex', 'important');
 		modalEl.classList.add('open');
 		document.body.style.overflow = 'hidden';
 	}
 	function hideModal() {
 		if (!modalEl) return;
 		modalEl.classList.remove('open');
-		modalEl.style.display = 'none';
+		modalEl.style.setProperty('display', 'none', 'important');
 		document.body.style.overflow = '';
 	}
 	loadArtists();
