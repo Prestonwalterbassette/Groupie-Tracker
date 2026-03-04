@@ -411,7 +411,19 @@ document.addEventListener('DOMContentLoaded', function () {
 	function createModal() {
 		modalEl = createEl('div', 'artist-modal');
 		modalEl.id = 'artistModal';
+		modalEl.style.position = 'fixed';
+		modalEl.style.inset = '0';
+		modalEl.style.display = 'none';
+		modalEl.style.alignItems = 'center';
+		modalEl.style.justifyContent = 'center';
+		modalEl.style.zIndex = '99999';
+		modalEl.style.background = 'rgba(0, 0, 0, 0.6)';
 		var panel = createEl('div', 'artist-modal__panel');
+		panel.style.position = 'relative';
+		panel.style.maxWidth = '720px';
+		panel.style.width = '90%';
+		panel.style.maxHeight = '85vh';
+		panel.style.overflowY = 'auto';
 		panel.setAttribute('role', 'dialog');
 		panel.setAttribute('aria-modal', 'true');
 		var closeBtn = createEl('button', 'artist-modal__close', '×');
@@ -567,10 +579,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		body.appendChild(detail);
 		panel.appendChild(hero);
 		panel.appendChild(body);
+		modalEl.style.display = 'flex';
 		modalEl.classList.add('open');
+		document.body.style.overflow = 'hidden';
 	}
 	function hideModal() {
-		if (modalEl) modalEl.classList.remove('open');
+		if (!modalEl) return;
+		modalEl.classList.remove('open');
+		modalEl.style.display = 'none';
+		document.body.style.overflow = '';
 	}
 	loadArtists();
 	});
