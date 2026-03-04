@@ -85,6 +85,10 @@ func main() {
 		http.ServeFile(w, r, filepath.Join("web", "templates", "geoloc.html"))
 	})
 
+	http.HandleFunc("/favorites.html", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, filepath.Join("web", "templates", "favorites.html"))
+	})
+
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, filepath.Join("web", "templates", "login.html"))
 	})
@@ -110,3 +114,5 @@ func main() {
 	log.Printf("Starting server on :%s — open http://localhost:%s/", port, port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
+
+
