@@ -782,6 +782,28 @@ document.addEventListener('DOMContentLoaded', function () {
 			// Ajouter la caption au vinyle
 			item.appendChild(caption);
 
+			// Bouton Ajouter/Retirer des favoris
+			if (window.GTFavorites) {
+				const favWrap = document.createElement('div');
+				favWrap.className = 'vinyl-favorite-wrap';
+				const favBtn = document.createElement('button');
+				favBtn.type = 'button';
+				favBtn.className = 'favorite-btn';
+				function syncFavoriteButton() {
+					const active = window.GTFavorites.isFavorite(a.id);
+					favBtn.textContent = active ? 'Retirer des favoris' : 'Ajouter aux favoris';
+					favBtn.classList.toggle('is-favorite', active);
+				}
+				syncFavoriteButton();
+				favBtn.addEventListener('click', function (e) {
+					e.stopPropagation();
+					window.GTFavorites.toggle(a);
+					syncFavoriteButton();
+				});
+				favWrap.appendChild(favBtn);
+				item.appendChild(favWrap);
+			}
+
 			// ================================================================
 			// SYSTÈME DE LECTURE AUDIO AU SURVOL PROLONGÉ (2.5 SECONDES)
 			// ================================================================

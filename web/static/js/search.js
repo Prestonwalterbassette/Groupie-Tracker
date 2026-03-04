@@ -255,6 +255,27 @@ document.addEventListener('DOMContentLoaded', () => {
 				body.appendChild(p);
 			}
 
+			if (window.GTFavorites && typeof artist.id !== 'undefined') {
+				const favoriteWrap = document.createElement('div');
+				const favoriteBtn = document.createElement('button');
+				favoriteBtn.type = 'button';
+				favoriteBtn.className = 'favorite-btn';
+				function syncFavoriteState() {
+					const isFav = window.GTFavorites.isFavorite(artist.id);
+					favoriteBtn.textContent = isFav ? 'Retirer des favoris' : 'Ajouter aux favoris';
+					favoriteBtn.classList.toggle('is-favorite', isFav);
+				}
+				syncFavoriteState();
+				favoriteBtn.addEventListener('click', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					window.GTFavorites.toggle(artist);
+					syncFavoriteState();
+				});
+				favoriteWrap.appendChild(favoriteBtn);
+				body.appendChild(favoriteWrap);
+			}
+
 			card.appendChild(body);
 			results.appendChild(card);
 
